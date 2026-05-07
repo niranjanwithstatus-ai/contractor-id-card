@@ -1,2 +1,903 @@
 # contractor-id-card
 For Nanliu Manufacturing India Pvt Ltd.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Nanliu India | Contractor Access Card with Signatures</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: #eef2f7;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            color: #1e3a5f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: #c0392b;
+            color: white;
+            font-size: 0.8rem;
+            padding: 5px 14px;
+            border-radius: 40px;
+            font-weight: bold;
+        }
+
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        /* FORM SECTION */
+        .form-card {
+            flex: 1.2;
+            min-width: 300px;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            padding: 1.8rem;
+        }
+
+        .form-card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+            color: #0b3b4f;
+            border-left: 5px solid #c0392b;
+            padding-left: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #1e4663;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 16px;
+            font-size: 0.9rem;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #c0392b;
+            box-shadow: 0 0 0 3px rgba(192,57,43,0.2);
+        }
+
+        button {
+            background: #c0392b;
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+
+        button:hover {
+            background: #a93226;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #475569;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #2d3a4b;
+        }
+
+        .btn-excel {
+            background: #1f7b4d;
+            color: white;
+        }
+
+        /* Camera & Photo */
+        .camera-section {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .camera-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .cam-btn {
+            background: #1e4663;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: auto;
+            margin-top: 0;
+        }
+
+        .camera-preview {
+            width: 100%;
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .camera-preview video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .photo-preview-area {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .photo-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid #c0392b;
+        }
+
+        .small-btn {
+            width: auto;
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            background: #e9ecef;
+            color: #1e293b;
+            margin-top: 0;
+        }
+
+        /* RIGHT SECTION - CARD PREVIEW */
+        .preview-area {
+            flex: 1.5;
+            min-width: 400px;
+        }
+
+        .id-preview-card {
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* ID CARD STYLES */
+        .id-card-wrapper {
+            background: #ffffff;
+            border-radius: 24px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+        }
+
+        .card-front {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #fff5f0 100%);
+        }
+
+        .company-header {
+            text-align: center;
+            border-bottom: 2px solid #c0392b;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .logo-placeholder {
+            width: 45px;
+            height: 45px;
+            background: #f1f5f9;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            overflow: hidden;
+        }
+
+        .logo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .company-name {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #1e3a5f;
+            line-height: 1.3;
+        }
+
+        .site-name {
+            font-size: 0.7rem;
+            color: #c0392b;
+            font-weight: 600;
+        }
+
+        .card-label {
+            background: #c0392b;
+            display: inline-block;
+            color: white;
+            padding: 3px 16px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .id-details {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .id-photo {
+            flex-shrink: 0;
+            width: 100px;
+            height: 100px;
+            background: #eef2ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid #c0392b;
+        }
+
+        .id-info {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 12px;
+        }
+
+        .info-row {
+            font-size: 0.75rem;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: #2d3e50;
+            display: block;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-weight: 500;
+            word-break: break-word;
+            font-size: 0.8rem;
+        }
+
+        /* Signature Section */
+        .signature-section {
+            margin-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-top: 1px dashed #cbd5e1;
+            padding-top: 12px;
+        }
+
+        .sign-box {
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .sign-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #2d3e50;
+            margin-bottom: 6px;
+        }
+
+        .sign-place {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 6px;
+            font-size: 0.7rem;
+            color: #4b5563;
+            cursor: pointer;
+            transition: 0.1s;
+            min-height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .sign-place:hover {
+            background: #f1f5f9;
+        }
+
+        .sign-img {
+            max-width: 100%;
+            max-height: 45px;
+            object-fit: contain;
+        }
+
+        /* Back Side - Rules */
+        .card-back {
+            background: #1e293b;
+            padding: 1.2rem;
+            border-top: 3px solid #c0392b;
+        }
+
+        .rules-title {
+            font-weight: 800;
+            font-size: 0.8rem;
+            color: #c0392b;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .rule-item {
+            font-size: 0.68rem;
+            padding: 5px 0;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            color: #f1f5f9;
+            border-bottom: 1px solid #334155;
+        }
+
+        .rule-icon {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        .footer-icons {
+            margin-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.6rem;
+            color: #94a3b8;
+            text-align: center;
+            padding-top: 8px;
+            border-top: 1px solid #334155;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* History List */
+        .generated-list {
+            background: white;
+            border-radius: 28px;
+            padding: 1.5rem;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        }
+
+        .worker-list {
+            max-height: 260px;
+            overflow-y: auto;
+        }
+
+        .worker-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 10px 8px;
+            cursor: pointer;
+        }
+
+        .worker-item:hover {
+            background: #fff5f0;
+        }
+
+        .view-badge {
+            background: #c0392b;
+            color: white;
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+        }
+
+        @media (max-width: 780px) {
+            .id-details {
+                flex-direction: column;
+                align-items: center;
+            }
+            .id-info {
+                grid-template-columns: 1fr;
+            }
+            .signature-section {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🪪 NANLIU INDIA <span class="badge">Contractor Access Card | Digital Signatures</span></h1>
+        <p>🔹 Company Logo (Nanliu Group) 🔹 Safety Officer & Security Signatures 🔹 Excel Export</p>
+    </div>
+
+    <div class="dashboard">
+        <!-- LEFT FORM -->
+        <div class="form-card">
+            <h2>📝 Contractor Registration</h2>
+            
+            <!-- Camera + Upload -->
+            <div class="camera-section">
+                <div class="camera-header">
+                    <strong>📸 Worker Photo</strong>
+                    <button type="button" id="openCameraBtn" class="cam-btn">📷 Open Camera</button>
+                    <button type="button" id="closeCameraBtn" class="cam-btn" style="background:#6c757d;">Close</button>
+                </div>
+                <div id="cameraPreview" class="camera-preview">
+                    <video id="video" autoplay playsinline></video>
+                    <div class="capture-controls" style="margin-top:8px;">
+                        <button type="button" id="captureBtn" class="small-btn" style="background:#c0392b; color:white;">Take Photo</button>
+                    </div>
+                </div>
+                <canvas id="canvas" style="display:none;"></canvas>
+                <div class="form-group" style="margin-top:8px;">
+                    <label>OR Upload Photo</label>
+                    <input type="file" id="photoUpload" accept="image/*">
+                </div>
+                <div class="photo-preview-area">
+                    <div class="photo-circle" id="photoCircle">📷</div>
+                    <button type="button" id="clearPhotoBtn" class="small-btn">Clear Photo</button>
+                </div>
+            </div>
+
+            <div class="form-group"><label>Contractor Access Card No. *</label><input type="text" id="cardNo" placeholder="e.g., NIL/CT/001"></div>
+            <div class="form-group"><label>Name of Worker *</label><input type="text" id="workerName" placeholder="e.g., Prakashkumar Parmar"></div>
+            <div class="form-group"><label>Contractor Name</label><input type="text" id="contractorName" placeholder="e.g., SUPPORT"></div>
+            <div class="form-group"><label>Blood Group</label><select id="bloodGroup"><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select></div>
+            <div class="form-group"><label>Emergency Contact No.</label><input type="text" id="emergencyContact" placeholder="+91 9876543210"></div>
+            <div class="form-group"><label>Medical Checkup Date</label><input type="date" id="medicalDate"></div>
+            <div class="form-group"><label>Safety Induction Date</label><input type="date" id="inductionDate"></div>
+            <div class="form-group"><label>Valid Up To</label><input type="date" id="validUntil"></div>
+            
+            <button id="generateIdBtn">✅ Generate & Save ID Card</button>
+            <button id="resetFormBtn" class="btn-secondary">⟳ Reset Form</button>
+            <button id="exportExcelBtn" class="btn-excel">📎 Export All Data (Excel CSV)</button>
+        </div>
+
+        <!-- RIGHT: ID CARD PREVIEW WITH SIGNATURES -->
+        <div class="preview-area">
+            <div class="id-preview-card">
+                <div id="liveIdCardContainer">
+                    <div class="id-card-wrapper" id="currentCardWrapper">
+                        <div class="card-front">
+                            <div class="company-header">
+                                <div class="logo-area">
+                                    <div class="logo-placeholder" id="companyLogoPlaceholder">
+                                        <span>🏭</span>
+                                    </div>
+                                    <div class="company-name">NANLIU MANUFACTURING<br>INDIA PVT LTD</div>
+                                </div>
+                                <div class="site-name">Authorized Contractor Access Card</div>
+                            </div>
+                            <div class="card-label">WORKER IDENTITY</div>
+                            <div class="id-details">
+                                <div class="id-photo" id="previewPhoto"><span>📷</span></div>
+                                <div class="id-info">
+                                    <div class="info-row"><span class="info-label">Card No.</span><span class="info-value" id="previewCardNo">---</span></div>
+                                    <div class="info-row"><span class="info-label">Worker Name</span><span class="info-value" id="previewWorkerName">---</span></div>
+                                    <div class="info-row"><span class="info-label">Contractor</span><span class="info-value" id="previewContractor">---</span></div>
+                                    <div class="info-row"><span class="info-label">Blood Group</span><span class="info-value" id="previewBlood">---</span></div>
+                                    <div class="info-row"><span class="info-label">Emergency</span><span class="info-value" id="previewEmergency">---</span></div>
+                                    <div class="info-row"><span class="info-label">Medical Date</span><span class="info-value" id="previewMedical">---</span></div>
+                                    <div class="info-row"><span class="info-label">Induction Date</span><span class="info-value" id="previewInduction">---</span></div>
+                                    <div class="info-row"><span class="info-label">Valid Up To</span><span class="info-value" id="previewValid">---</span></div>
+                                </div>
+                            </div>
+                            
+                            <!-- SIGNATURE SECTION: Safety Officer + Security Gate -->
+                            <div class="signature-section">
+                                <div class="sign-box">
+                                    <div class="sign-label">✅ SAFETY OFFICER APPROVAL</div>
+                                    <div class="sign-place" id="safetyOfficerSignBtn">
+                                        <span id="safetySignText">✍️ Click to Sign</span>
+                                        <img id="safetySignImg" class="sign-img" style="display:none;">
+                                    </div>
+                                </div>
+                                <div class="sign-box">
+                                    <div class="sign-label">🛡️ SECURITY GATE VERIFICATION</div>
+                                    <div class="sign-place" id="securityGateSignBtn">
+                                        <span id="securitySignText">✍️ Click to Sign</span>
+                                        <img id="securitySignImg" class="sign-img" style="display:none;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- BACK SIDE: RULES as requested -->
+                        <div class="card-back">
+                            <div class="rules-title">⚠️ SITE SAFETY RULES (STRICTLY FOLLOW)</div>
+                            <div class="rule-item"><span class="rule-icon">🔴</span> Smoking & consuming alcohol strictly prohibited.</div>
+                            <div class="rule-item"><span class="rule-icon">🔴</span> Carrying match-box, lighter, cigarettes, bidi, gutka is strictly prohibited.</div>
+                            <div class="rule-item"><span class="rule-icon">🚨</span> If you hear an emergency siren, leave the job & proceed to assembly point.</div>
+                            <div class="rule-item"><span class="rule-icon">⚠️</span> Person found violating the site safety rules will be removed from the site.</div>
+                            <div class="rule-item"><span class="rule-icon">🧼</span> Follow GMP & hygiene program as communicated & acknowledged.</div>
+                            <div class="rule-item"><span class="rule-icon">🚶</span> Maintain discipline and avoid unnecessary movement in restricted areas.</div>
+                            <div class="footer-icons"><span>🔹 General Site Induction</span><span>🔹 Access Control</span><span>🔹 PPE Usage</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-buttons" id="actionButtons" style="display: none;">
+                    <button id="downloadPdfBtn" class="small-btn">📥 Download PDF (Full Card)</button>
+                    <button id="printCardBtn" class="small-btn">🖨️ Print ID Card</button>
+                </div>
+            </div>
+
+            <div class="generated-list">
+                <div class="list-header"><strong>📋 Generated Contractors</strong><button id="clearHistoryBtn" style="width:auto; background:#b91c1c; padding:6px 12px;">Clear All</button></div>
+                <div id="workerHistoryList" class="worker-list"><div class="empty-msg">No records yet.</div></div>
+                <p style="font-size:0.7rem; margin-top:8px;">📌 Click any record → Load card with signatures. Excel export includes all data.</p>
+            </div>
+        </div>
+    </div>
+    <footer>🏭 Nanliu Manufacturing India Pvt Ltd | Digital Signatures for Officer & Security | Live Camera + Excel Export</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    // --- Global Data ---
+    let contractorsArray = [];
+    let currentPhotoDataUrl = null;
+    let stream = null;
+    let currentWorkerId = null;
+
+    // Signature storage (per card, but for preview we store temp signatures)
+    let tempSafetySignature = null;
+    let tempSecuritySignature = null;
+
+    // DOM Elements
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const cameraPreviewDiv = document.getElementById('cameraPreview');
+    const openCameraBtn = document.getElementById('openCameraBtn');
+    const closeCameraBtn = document.getElementById('closeCameraBtn');
+    const captureBtn = document.getElementById('captureBtn');
+    const photoUpload = document.getElementById('photoUpload');
+    const photoCircle = document.getElementById('photoCircle');
+    const clearPhotoBtn = document.getElementById('clearPhotoBtn');
+    
+    const cardNoInput = document.getElementById('cardNo');
+    const workerNameInput = document.getElementById('workerName');
+    const contractorNameInput = document.getElementById('contractorName');
+    const bloodGroupSelect = document.getElementById('bloodGroup');
+    const emergencyInput = document.getElementById('emergencyContact');
+    const medicalDateInput = document.getElementById('medicalDate');
+    const inductionDateInput = document.getElementById('inductionDate');
+    const validUntilInput = document.getElementById('validUntil');
+    
+    const generateBtn = document.getElementById('generateIdBtn');
+    const resetBtn = document.getElementById('resetFormBtn');
+    const exportExcelBtn = document.getElementById('exportExcelBtn');
+    const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+    const printCardBtn = document.getElementById('printCardBtn');
+    const actionButtons = document.getElementById('actionButtons');
+    const workerHistoryDiv = document.getElementById('workerHistoryList');
+    
+    // Preview elements
+    const previewPhoto = document.getElementById('previewPhoto');
+    const previewCardNo = document.getElementById('previewCardNo');
+    const previewWorkerName = document.getElementById('previewWorkerName');
+    const previewContractor = document.getElementById('previewContractor');
+    const previewBlood = document.getElementById('previewBlood');
+    const previewEmergency = document.getElementById('previewEmergency');
+    const previewMedical = document.getElementById('previewMedical');
+    const previewInduction = document.getElementById('previewInduction');
+    const previewValid = document.getElementById('previewValid');
+    
+    const safetyOfficerBtn = document.getElementById('safetyOfficerSignBtn');
+    const securityGateBtn = document.getElementById('securityGateSignBtn');
+    const safetySignText = document.getElementById('safetySignText');
+    const safetySignImg = document.getElementById('safetySignImg');
+    const securitySignText = document.getElementById('securitySignText');
+    const securitySignImg = document.getElementById('securitySignImg');
+
+    // ----- Logo Fetch from Nanliu Group (attempt to load favicon/logo)
+    function loadCompanyLogo() {
+        const logoContainer = document.getElementById('companyLogoPlaceholder');
+        // Try to fetch logo from official website using a proxy-free approach (img tag)
+        const logoUrl = "https://nanliugroup.in/favicon.ico";
+        const imgTest = new Image();
+        imgTest.onload = () => {
+            logoContainer.innerHTML = `<img src="${logoUrl}" style="width:100%; height:100%; object-fit:contain;">`;
+        };
+        imgTest.onerror = () => {
+            // fallback: use text icon
+            logoContainer.innerHTML = '<span style="font-size:28px;">🏭</span>';
+        };
+        imgTest.src = logoUrl;
+        // also try to find any png logo
+        const pngLogo = "https://nanliugroup.in/logo.png";
+        const pngTest = new Image();
+        pngTest.onload = () => {
+            logoContainer.innerHTML = `<img src="${pngLogo}" style="width:100%; height:100%; object-fit:contain;">`;
+        };
+        pngTest.src = pngLogo;
+    }
+    loadCompanyLogo();
+
+    // Camera functions
+    async function openCamera() {
+        closeCamera();
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+            cameraPreviewDiv.style.display = 'block';
+        } catch(err) { alert("Camera access error"); }
+    }
+    function closeCamera() {
+        if(stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+        video.srcObject = null;
+        cameraPreviewDiv.style.display = 'none';
+    }
+    function capturePhoto() {
+        if(!video.videoWidth) { alert("Camera not ready"); return; }
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        currentPhotoDataUrl = canvas.toDataURL('image/jpeg', 0.9);
+        updatePhotoPreview(currentPhotoDataUrl);
+        closeCamera();
+    }
+    function updatePhotoPreview(dataUrl) {
+        if(dataUrl) photoCircle.innerHTML = `<img src="${dataUrl}" style="width:100%; height:100%; object-fit:cover;">`;
+        else photoCircle.innerHTML = '📷';
+    }
+    function clearPhoto() { currentPhotoDataUrl = null; updatePhotoPreview(null); photoUpload.value = ''; }
+    photoUpload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if(file) { const reader = new FileReader(); reader.onload = (ev) => { currentPhotoDataUrl = ev.target.result; updatePhotoPreview(currentPhotoDataUrl); }; reader.readAsDataURL(file); }
+        else clearPhoto();
+    });
+    clearPhotoBtn.addEventListener('click', clearPhoto);
+    openCameraBtn.addEventListener('click', openCamera);
+    closeCameraBtn.addEventListener('click', closeCamera);
+    captureBtn.addEventListener('click', capturePhoto);
+
+    // Signature handlers (draw simple signature placeholder - click to add mock signature)
+    function addSignatureToElement(imgElement, textElement, signType) {
+        // create a simple drawn signature using canvas
+        const canvasSig = document.createElement('canvas');
+        canvasSig.width = 120;
+        canvasSig.height = 45;
+        const ctx = canvasSig.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvasSig.width, canvasSig.height);
+        ctx.strokeStyle = '#c0392b';
+        ctx.lineWidth = 2;
+        ctx.font = 'italic 14px "Segoe UI"';
+        ctx.fillStyle = '#2c3e50';
+        if(signType === 'safety') {
+            ctx.fillText('Authorized Sign', 15, 28);
+        } else {
+            ctx.fillText('Gate Verified', 15, 28);
+        }
+        ctx.strokeRect(2, 2, canvasSig.width-4, canvasSig.height-4);
+        const sigDataUrl = canvasSig.toDataURL();
+        imgElement.src = sigDataUrl;
+        imgElement.style.display = 'block';
+        textElement.style.display = 'none';
+        return sigDataUrl;
+    }
+
+    safetyOfficerBtn.addEventListener('click', () => {
+        tempSafetySignature = addSignatureToElement(safetySignImg, safetySignText, 'safety');
+    });
+    securityGateBtn.addEventListener('click', () => {
+        tempSecuritySignature = addSignatureToElement(securitySignImg, securitySignText, 'security');
+    });
+
+    function resetSignaturesDisplay() {
+        safetySignImg.style.display = 'none';
+        safetySignText.style.display = 'block';
+        securitySignImg.style.display = 'none';
+        securitySignText.style.display = 'block';
+        tempSafetySignature = null;
+        tempSecuritySignature = null;
+    }
+
+    // Update Preview UI from worker
+    function updatePreviewFromWorker(worker) {
+        if(!worker) return;
+        previewCardNo.innerText = worker.cardNo || '---';
+        previewWorkerName.innerText = worker.workerName || '---';
+        previewContractor.innerText = worker.contractorName || '---';
+        previewBlood.innerText = worker.bloodGroup || '---';
+        previewEmergency.innerText = worker.emergencyContact || '---';
+        previewMedical.innerText = worker.medicalDate || '---';
+        previewInduction.innerText = worker.inductionDate || '---';
+        previewValid.innerText = worker.validUntil || '---';
+        if(worker.photoDataUrl) previewPhoto.innerHTML = `<img src="${worker.photoDataUrl}" style="width:100%; height:100%; object-fit:cover;">`;
+        else previewPhoto.innerHTML = '<span>📷</span>';
+        // Restore signatures if any
+        resetSignaturesDisplay();
+        if(worker.safetySignature) {
+            safetySignImg.src = worker.safetySignature;
+            safetySignImg.style.display = 'block';
+            safetySignText.style.display = 'none';
+            tempSafetySignature = worker.safetySignature;
+        }
+        if(worker.securitySignature) {
+            securitySignImg.src = worker.securitySignature;
+            securitySignImg.style.display = 'block';
+            securitySignText.style.display = 'none';
+            tempSecuritySignature = worker.securitySignature;
+        }
+        actionButtons.style.display = 'flex';
+        currentWorkerId = worker.id;
+    }
+
+    // Storage
+    function saveToLocal() { localStorage.setItem('nanliuContractors', JSON.stringify(contractorsArray)); }
+    function loadFromLocal() {
+        const stored = localStorage.getItem('nanliuContractors');
+        if(stored) {
+            contractorsArray = JSON.parse(stored);
+            renderHistoryList();
+            if(contractorsArray.length) updatePreviewFromWorker(contractorsArray[contractorsArray.length-1]);
+        }
+    }
+    function renderHistoryList() {
+        if(!contractorsArray.length) { workerHistoryDiv.innerHTML = '<div class="empty-msg">No contractors yet.</div>'; return; }
+        let html = '';
+        contractorsArray.forEach((c, idx) => {
+            html += `<div class="worker-item" data-index="${idx}"><div><strong>${escapeHtml(c.cardNo)}</strong><br><small>${escapeHtml(c.workerName)}</small></div><span class="view-badge">VIEW</span></div>`;
+        });
+        workerHistoryDiv.innerHTML = html;
+        document.querySelectorAll('.worker-item').forEach(el => {
+            el.addEventListener('click', () => {
+                const idx = parseInt(el.getAttribute('data-index'));
+                if(contractorsArray[idx]) updatePreviewFromWorker(contractorsArray[idx]);
+            });
+        });
+    }
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+    // Generate new worker
+    generateBtn.addEventListener('click', () => {
+        if(!cardNoInput.value.trim() || !workerNameInput.value.trim()) { alert("Card No. and Worker Name required"); return; }
+        const newWorker = {
+            id: Date.now().toString(),
+            cardNo: cardNoInput.value.trim(),
+            workerName: workerNameInput.value.trim(),
+            contractorName: contractorNameInput.value.trim(),
+            bloodGroup: bloodGroupSelect.value,
+            emergencyContact: emergencyInput.value.trim(),
+            medicalDate: medicalDateInput.value,
+            inductionDate: inductionDateInput.value,
+            validUntil: validUntilInput.value,
+            photoDataUrl: currentPhotoDataUrl || '',
+            safetySignature: tempSafetySignature || null,
+            securitySignature: tempSecuritySignature || null,
+            createdAt: new Date().toISOString()
+        };
+        contractorsArray.push(newWorker);
+        saveToLocal();
+        renderHistoryList();
+        updatePreviewFromWorker(newWorker);
+        alert(`Card generated for ${newWorker.workerName}`);
+    });
+
+    resetBtn.addEventListener('click', () => {
+        cardNoInput.value = ''; workerNameInput.value = ''; contractorNameInput.value = '';
+        bloodGroupSelect.value = 'A+'; emergencyInput.value = ''; medicalDateInput.value = '';
+        inductionDateInput.value = ''; validUntilInput.value = '';
+        clearPhoto(); resetSignaturesDisplay(); closeCamera();
+        if(contractorsArray.length) updatePreviewFromWorker(contractorsArray[contractorsArray.length-1]);
+    });
+
+    exportExcelBtn.addEventListener('click', () => {
+        if(!contractorsArray.length) { alert("No data"); return; }
+        const headers = ["Card No","Worker Name","Contractor","Blood Group","Emergency","Medical Date","Induction Date","Valid Up To","Has Safety Sign","Has Security Sign","Photo"];
+        const rows = contractorsArray.map(w => [w.cardNo, w.workerName, w.contractorName, w.bloodGroup, w.emergencyContact, w.medicalDate, w.inductionDate, w.validUntil, w.safetySignature?"Yes":"No", w.securitySignature?"Yes":"No", w.photoDataUrl?"Photo Present":""]);
+        let csv = headers.join(",")+"\n";
+        rows.forEach(r => { csv += r.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")+"\n"; });
+        const blob = new Blob(["\uFEFF"+csv], {type:"text/csv"});
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = "nanliu_contractors.csv";
+        link.click();
+        URL.revokeObjectURL(link.href);
+    });
+
+    clearHistoryBtn.addEventListener('click', () => {
+        if(confirm("Delete ALL contractor records?")) { contractorsArray = []; saveToLocal(); renderHistoryList(); actionButtons.style.display = 'none'; resetSignaturesDisplay(); }
+    });
+
+    downloadPdfBtn.addEventListener('click', () => {
+        const cardElem = document.getElementById('currentCardWrapper');
+        if(!cardElem) return;
+        const clone = cardElem.cloneNode(true);
+        clone.style.width = '400px';
+        clone.style.margin = 'auto';
+        html2pdf().set({ margin: 0.5, filename: `Nanliu_Card_${previewCardNo.innerText}.pdf`, image: { type: 'jpeg', quality: 0.95 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } }).from(clone).save();
+    });
+
+    printCardBtn.addEventListener('click', () => {
+        const cardElem = document.getElementById('currentCardWrapper');
+        const win = window.open('', '_blank');
+        win.document.write(`<html><head><title>Nanliu ID Card</title><style>body{display:flex;justify-content:center;padding:30px;}</style></head><body>${cardElem.outerHTML}</body></html>`);
+        win.document.close();
+        win.print();
+    });
+
+    loadFromLocal();
+</script>
+</body>
+</html>
+```
